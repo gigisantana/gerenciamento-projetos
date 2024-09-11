@@ -7,4 +7,6 @@ use Illuminate\Support\Facades\Route;
 // Método: LISTAR USUÁRIOS
 Route::get('/users', [UserController::class, 'index']);
 // Método: VISUALIZAR USUÁRIO
-Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/users/{user}', [UserController::class, 'show']);
+// Método: CADASTRAR USUÁRIO
+Route::post('/users', [UserController::class, 'store']);
