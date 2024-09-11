@@ -49,7 +49,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 'user' => $user,
-                'message' => "Usuário cadastrado!",
+                'message' => "Usuário cadastrado com sucesso!",
             ], 201);
 
         } catch (Exception $e){
@@ -57,10 +57,59 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => false,
-                'message' => "Usuário não cadastrado.",
+                'message' => "Não foi possível cadastrar usuário.",
             ]);
         }
+    }
+
+    public function update(UserRequest $request, User $user) : JsonResponse{
+        DB::beginTransaction();
+
+        try{
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
+
+            // Registra e apresenta os dados atualizados
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'user' => $user,
+                'message' => "Usuário editado com sucesso!",
+            ], 200);
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => "Não foi possível editar o usuário.",
+            ], 400);
+        }
         
-        $user = new User();
+        return response()->json([
+            'status' => true,
+            'user' => $request,
+            'message' => "Usuário editado com sucesso!",
+        ], 201);
+    }
+
+    public function destroy(User $user) : JsonResponse{
+        try{
+            $user->delete();
+
+            return response()->json([
+                'status' => true,
+                'user' => $user,
+                'message' => "Usuário foi deletado com sucesso!",
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => true,
+                'message' => "Não foi possível apagar o usuário.",
+            ], 400);
+        }
+
     }
 }

@@ -23,6 +23,7 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Pega o id do usuário na URL
         $user_id = $this->route('user');
         return [
             'name' => 'require',
