@@ -23,8 +23,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\LoginListener'
         ],
 
-        'App\Events\StudentRegister' => [
-            'App\Listeners\StudentRegisterListener',
+        'App\Events\ClientRegister' => [
+            'App\Listeners\ClientRegisterListener',
         ],
 
         'App\Events\HourRegister' => [
